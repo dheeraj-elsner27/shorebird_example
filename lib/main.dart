@@ -30,7 +30,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   final _updater = ShorebirdUpdater();
   late final bool _isUpdaterAvailable;
-  var _currentTrack = UpdateTrack.stable;
+  final _currentTrack = UpdateTrack.stable;
   var _isCheckingForUpdates = false;
   Patch? _currentPatch;
 
@@ -208,13 +208,6 @@ class _MyHomePageState extends State<MyHomePage> {
           const Spacer(),
           _CurrentPatchVersion(patch: _currentPatch),
           const SizedBox(height: 12),
-         /* _TrackPicker(
-            currentTrack: _currentTrack,
-            onChanged: (track) {
-              setState(() => _currentTrack = track);
-            },
-          ),
-          const Spacer(),*/
         ],
       ),
       floatingActionButton: FloatingActionButton(
@@ -272,46 +265,6 @@ class _CurrentPatchVersion extends StatelessWidget {
   }
 }
 
-/// Widget that allows selection of update track.
-class _TrackPicker extends StatelessWidget {
-  const _TrackPicker({
-    required this.currentTrack,
-    required this.onChanged,
-  });
-
-  final UpdateTrack currentTrack;
-
-  final ValueChanged<UpdateTrack> onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text('Update track:'),
-        SegmentedButton<UpdateTrack>(
-          segments: const [
-            ButtonSegment(
-              label: Text('Stable'),
-              value: UpdateTrack.stable,
-            ),
-            ButtonSegment(
-              label: Text('Beta'),
-              icon: Icon(Icons.science),
-              value: UpdateTrack.beta,
-            ),
-            ButtonSegment(
-              label: Text('Staging'),
-              icon: Icon(Icons.construction),
-              value: UpdateTrack.staging,
-            ),
-          ],
-          selected: {currentTrack},
-          onSelectionChanged: (tracks) => onChanged(tracks.single),
-        ),
-      ],
-    );
-  }
-}
 
 /// A reusable loading indicator.
 class _LoadingIndicator extends StatelessWidget {
